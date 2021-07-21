@@ -8,8 +8,9 @@
 import UIKit
 import SDWebImageSVGCoder
 
-class CitiesCollectionViewCell: UICollectionViewCell {
+final class CitiesCollectionViewCell: UICollectionViewCell {
 
+    // MARK: - Public Properties
     static let reuseIdentifier = "CitiesCollectionViewCell"
 
     var city: String? {
@@ -29,7 +30,14 @@ class CitiesCollectionViewCell: UICollectionViewCell {
         }
     }
 
-    private lazy var temperatureLabel: UILabel = {
+    var weatherIconImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+
+    // MARK: - Private Properties
+    private var temperatureLabel: UILabel = {
         let label = UILabel()
         label.text = "--"
         label.textColor = .white
@@ -38,13 +46,7 @@ class CitiesCollectionViewCell: UICollectionViewCell {
         return label
     }()
 
-    lazy var weatherIconImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        return imageView
-    }()
-
-    private lazy var cityNameLabel: UILabel = {
+    private var cityNameLabel: UILabel = {
         let label = UILabel()
         label.text = "--"
         label.font = .systemFont(ofSize: 14)
@@ -53,7 +55,7 @@ class CitiesCollectionViewCell: UICollectionViewCell {
         return label
     }()
 
-    private lazy var humidityImageView: UIImageView = {
+    private var humidityImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = #imageLiteral(resourceName: "humidity").withRenderingMode(.alwaysTemplate)
         imageView.tintColor = #colorLiteral(red: 0.3984864354, green: 0.5254383683, blue: 0.7126730084, alpha: 1)
@@ -61,7 +63,7 @@ class CitiesCollectionViewCell: UICollectionViewCell {
         return imageView
     }()
 
-    private lazy var humidityTextLabel: UILabel = {
+    private var humidityTextLabel: UILabel = {
         let label = UILabel()
         label.text = "--"
         label.font = .systemFont(ofSize: 10)
@@ -70,7 +72,7 @@ class CitiesCollectionViewCell: UICollectionViewCell {
         return label
     }()
 
-    private lazy var windSpeedImageView: UIImageView = {
+    private var windSpeedImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.image = #imageLiteral(resourceName: "wind").withRenderingMode(.alwaysTemplate)
         imageView.tintColor = #colorLiteral(red: 0.3984864354, green: 0.5254383683, blue: 0.7126730084, alpha: 1)
@@ -78,7 +80,7 @@ class CitiesCollectionViewCell: UICollectionViewCell {
         return imageView
     }()
 
-    private lazy var windSpeedTextLabel: UILabel = {
+    private var windSpeedTextLabel: UILabel = {
         let label = UILabel()
         label.text = "--"
         label.font = .systemFont(ofSize: 10)
@@ -95,6 +97,7 @@ class CitiesCollectionViewCell: UICollectionViewCell {
         return activityIndicator
     }()
 
+    // MARK: - Initializers
     override init(frame: CGRect) {
         super.init(frame: frame)
         customViews()
@@ -105,10 +108,12 @@ class CitiesCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: - Life Cycle
     override func layoutSubviews() {
         layout()
     }
 
+    // MARK: - Private Methods
     private func customViews() {
         backgroundColor = #colorLiteral(red: 0.08250149339, green: 0.1717924178, blue: 0.2216925323, alpha: 1)
         layer.cornerRadius = 16
@@ -128,8 +133,8 @@ class CitiesCollectionViewCell: UICollectionViewCell {
 
 
 // MARK: - Layout
-extension CitiesCollectionViewCell {
-    private func layout() {
+private extension CitiesCollectionViewCell {
+    func layout() {
         layoutTemperatureLabel(in: self.contentView)
         layoutTemperatureImageView(in: self.contentView)
         layoutActivityIndicator(in: self.contentView)
@@ -140,7 +145,7 @@ extension CitiesCollectionViewCell {
         layoutWindSpeedTextLabel(in: self.contentView)
     }
 
-    private func layoutTemperatureLabel(in container: UIView) {
+    func layoutTemperatureLabel(in container: UIView) {
         let label = temperatureLabel
         container.addSubview(label)
         NSLayoutConstraint.activate([
@@ -149,7 +154,7 @@ extension CitiesCollectionViewCell {
         ])
     }
 
-    private func layoutTemperatureImageView(in container: UIView) {
+    func layoutTemperatureImageView(in container: UIView) {
         let imageView = weatherIconImageView
         container.addSubview(imageView)
         NSLayoutConstraint.activate([
@@ -160,7 +165,7 @@ extension CitiesCollectionViewCell {
         ])
     }
 
-    private func layoutActivityIndicator(in container: UIView) {
+    func layoutActivityIndicator(in container: UIView) {
         let indicator = activityIndicator
         container.addSubview(indicator)
         NSLayoutConstraint.activate([
@@ -171,7 +176,7 @@ extension CitiesCollectionViewCell {
         ])
     }
 
-    private func layoutCityNameLabel(in container: UIView) {
+    func layoutCityNameLabel(in container: UIView) {
         let label = cityNameLabel
         container.addSubview(label)
         NSLayoutConstraint.activate([
@@ -180,7 +185,7 @@ extension CitiesCollectionViewCell {
         ])
     }
 
-    private func layoutHumidityImageView(in container: UIView) {
+    func layoutHumidityImageView(in container: UIView) {
         let imageView = humidityImageView
         container.addSubview(imageView)
         NSLayoutConstraint.activate([
@@ -191,7 +196,7 @@ extension CitiesCollectionViewCell {
         ])
     }
 
-    private func layoutHumidityTextLabel(in container: UIView) {
+    func layoutHumidityTextLabel(in container: UIView) {
         let label = humidityTextLabel
         container.addSubview(label)
         NSLayoutConstraint.activate([
@@ -200,7 +205,7 @@ extension CitiesCollectionViewCell {
         ])
     }
 
-    private func layoutWindSpeedImageView(in container: UIView) {
+    func layoutWindSpeedImageView(in container: UIView) {
         let imageView = windSpeedImageView
         container.addSubview(imageView)
         NSLayoutConstraint.activate([
@@ -211,7 +216,7 @@ extension CitiesCollectionViewCell {
         ])
     }
 
-    private func layoutWindSpeedTextLabel(in container: UIView) {
+    func layoutWindSpeedTextLabel(in container: UIView) {
         let label = windSpeedTextLabel
         container.addSubview(label)
         NSLayoutConstraint.activate([

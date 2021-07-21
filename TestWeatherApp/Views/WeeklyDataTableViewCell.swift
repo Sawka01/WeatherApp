@@ -9,6 +9,7 @@ import UIKit
 
 final class WeeklyDataTableViewCell: UITableViewCell {
 
+    // MARK: - Public Properties
     static let reuseIdentifier = "WeeklyDataTableViewCell"
 
     var weekly: Forecast? {
@@ -20,6 +21,7 @@ final class WeeklyDataTableViewCell: UITableViewCell {
         }
     }
 
+    // MARK: - Private Properties
     private lazy var weekTextLabel: UILabel = {
         let label = UILabel()
         label.text = "--"
@@ -53,6 +55,7 @@ final class WeeklyDataTableViewCell: UITableViewCell {
         return label
     }()
 
+    // MARK: - Initializers
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
     }
@@ -61,10 +64,12 @@ final class WeeklyDataTableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: - Life Cycle
     override func layoutSubviews() {
         layout()
     }
 
+    // MARK: - Private Methods
 //    private func fetchTemperatureIcon(from week: Forecast) {
 //        if let url = URL(string: "https://yastatic.net/weather/i/icons/blueye/color/svg/\(week.icon).svg") {
 //            DispatchQueue.main.async {
@@ -75,15 +80,15 @@ final class WeeklyDataTableViewCell: UITableViewCell {
 }
 
 // MARK: - Layout
-extension WeeklyDataTableViewCell {
-    private func layout() {
+private extension WeeklyDataTableViewCell {
+    func layout() {
         layoutWeekTextLabel(in: self.contentView)
         layoutWeeklyWeatherImageView(in: self.contentView)
         layoutWeeklyFeelsLikeLabel(in: self.contentView)
         layoutWeeklyTemperatureLabel(in: self.contentView)
     }
 
-    private func layoutWeekTextLabel(in container: UIView) {
+    func layoutWeekTextLabel(in container: UIView) {
         let label = weekTextLabel
         container.addSubview(label)
         NSLayoutConstraint.activate([
@@ -92,7 +97,7 @@ extension WeeklyDataTableViewCell {
         ])
     }
 
-    private func layoutWeeklyWeatherImageView(in container: UIView) {
+    func layoutWeeklyWeatherImageView(in container: UIView) {
         let imageView = weeklyWeatherImageView
         container.addSubview(imageView)
         NSLayoutConstraint.activate([
@@ -101,7 +106,7 @@ extension WeeklyDataTableViewCell {
         ])
     }
 
-    private func layoutWeeklyTemperatureLabel(in container: UIView) {
+    func layoutWeeklyTemperatureLabel(in container: UIView) {
         let label = weeklyTemperatureLabel
         container.addSubview(label)
         NSLayoutConstraint.activate([
@@ -110,7 +115,7 @@ extension WeeklyDataTableViewCell {
         ])
     }
 
-    private func layoutWeeklyFeelsLikeLabel(in container: UIView) {
+    func layoutWeeklyFeelsLikeLabel(in container: UIView) {
         let label = weeklyFeelsLikeLabel
         container.addSubview(label)
         NSLayoutConstraint.activate([

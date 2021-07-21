@@ -9,6 +9,7 @@ import UIKit
 
 final class ViewController: UIViewController {
 
+    // MARK: - Private Properties
     private lazy var citiesDataCollectionView: UICollectionView = {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
@@ -43,8 +44,9 @@ final class ViewController: UIViewController {
         "Egypt"
     ]
 
-    var cityWithWeather: [String: Weather] = [:]
+    private var cityWithWeather: [String: Weather] = [:]
 
+    // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationItem.title = "Weather"
@@ -57,6 +59,7 @@ final class ViewController: UIViewController {
         }
     }
 
+    // MARK: - Private Methods
     private func setupCollectionView() {
         citiesDataCollectionView.register(CitiesCollectionViewCell.self, forCellWithReuseIdentifier: CitiesCollectionViewCell.reuseIdentifier)
         citiesDataCollectionView.delegate = self
@@ -160,12 +163,12 @@ extension ViewController: UICollectionViewDelegateFlowLayout {
 }
 
 // MARK: - Layout
-extension ViewController {
-    private func layout() {
+private extension ViewController {
+    func layout() {
         layoutCitiesCollectionView(in: self.view)
     }
 
-    private func layoutCitiesCollectionView(in container: UIView) {
+    func layoutCitiesCollectionView(in container: UIView) {
         let collectionView = citiesDataCollectionView
         container.addSubview(collectionView)
         NSLayoutConstraint.activate([

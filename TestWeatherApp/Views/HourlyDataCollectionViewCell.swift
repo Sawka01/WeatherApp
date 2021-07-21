@@ -9,6 +9,7 @@ import UIKit
 
 final class HourlyDataCollectionViewCell: UICollectionViewCell {
 
+    // MARK: - Public Properties
     static let reuseIdentifier = "HourlyDataCollectionViewCell"
 
     var hourly: Hourly? {
@@ -20,7 +21,8 @@ final class HourlyDataCollectionViewCell: UICollectionViewCell {
         }
     }
 
-    private lazy var hourTextLabel: UILabel = {
+    // MARK: - Private Properties
+    private var hourTextLabel: UILabel = {
         let label = UILabel()
         label.text = "--"
         label.textColor = #colorLiteral(red: 0.7780510783, green: 0.7922836542, blue: 0.792152822, alpha: 1)
@@ -29,13 +31,13 @@ final class HourlyDataCollectionViewCell: UICollectionViewCell {
         return label
     }()
 
-    private lazy var hourlyWeatherImageView: UIImageView = {
+    private var hourlyWeatherImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
 
-    private lazy var hourlyTemperatureLabel: UILabel = {
+    private var hourlyTemperatureLabel: UILabel = {
         let label = UILabel()
         label.text = "--"
         label.textColor = #colorLiteral(red: 0.7780510783, green: 0.7922836542, blue: 0.792152822, alpha: 1)
@@ -44,6 +46,7 @@ final class HourlyDataCollectionViewCell: UICollectionViewCell {
         return label
     }()
 
+    // MARK: - Initializers
     override init(frame: CGRect) {
         super.init(frame: frame)
     }
@@ -52,10 +55,12 @@ final class HourlyDataCollectionViewCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
+    // MARK: - Life Cycle
     override func layoutSubviews() {
         layout()
     }
 
+    // MARK: - Private Methods
     private func fetchTemperatureIcon(from hour: Hourly) {
         if let url = URL(string: "https://yastatic.net/weather/i/icons/blueye/color/svg/\(hour.icon).svg") {
             DispatchQueue.main.async {

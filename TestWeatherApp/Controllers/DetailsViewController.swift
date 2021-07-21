@@ -9,14 +9,19 @@ import UIKit
 
 final class DetailsViewController: UIViewController {
 
-    private lazy var temperatureLabel: UILabel = {
-        let label = UILabel()
-        label.text = "--"
-        label.textColor = .white
-        label.font = .systemFont(ofSize: 70, weight: .medium)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        return label
-    }()
+    // MARK: - Public Properties
+    var weather: Weather? {
+        didSet {
+            guard let weather = weather else { return }
+            temperatureLabel.text = "\(weather.fact.temp)°"
+            humidityTextLabel.text = "\(weather.fact.humidity)%"
+            windSpeedTextLabel.text = "\(weather.fact.windSpeed)m/s"
+            conditionLabel.text = "\(weather.fact.condition)"
+            pressureTextLabel.text = "\(weather.fact.pressurePA)Pa"
+            hourlyDataCollectionView.reloadData()
+            weeklyDataTableView.reloadData()
+        }
+    }
 
     lazy var weatherIconImageView: UIImageView = {
         let imageView = UIImageView()
@@ -29,6 +34,16 @@ final class DetailsViewController: UIViewController {
         label.text = "--"
         label.font = .systemFont(ofSize: 20)
         label.textColor = .white
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+
+    // MARK: - Private Properties
+    private lazy var temperatureLabel: UILabel = {
+        let label = UILabel()
+        label.text = "--"
+        label.textColor = .white
+        label.font = .systemFont(ofSize: 70, weight: .medium)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -126,19 +141,7 @@ final class DetailsViewController: UIViewController {
         return tableView
     }()
 
-    var weather: Weather? {
-        didSet {
-            guard let weather = weather else { return }
-            temperatureLabel.text = "\(weather.fact.temp)°"
-            humidityTextLabel.text = "\(weather.fact.humidity)%"
-            windSpeedTextLabel.text = "\(weather.fact.windSpeed)m/s"
-            conditionLabel.text = "\(weather.fact.condition)"
-            pressureTextLabel.text = "\(weather.fact.pressurePA)Pa"
-            hourlyDataCollectionView.reloadData()
-            weeklyDataTableView.reloadData()
-        }
-    }
-
+    // MARK: - Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         layout()
@@ -148,6 +151,7 @@ final class DetailsViewController: UIViewController {
         navigationController?.navigationItem.leftBarButtonItem?.title = ""
     }
 
+    // MARK: - Private Methods
     private func setupHourlyDataCollectionView() {
         hourlyDataCollectionView.register(HourlyDataCollectionViewCell.self, forCellWithReuseIdentifier: HourlyDataCollectionViewCell.reuseIdentifier)
         hourlyDataCollectionView.delegate = self
@@ -193,8 +197,8 @@ extension DetailsViewController: UICollectionViewDelegate, UICollectionViewDataS
 }
 
 // MARK: - Layout
-extension DetailsViewController {
-    private func layout() {
+private extension DetailsViewController {
+    func layout() {
         layoutWeatherIconImageView(in: self.view)
         layoutCityNameLabel(in: self.view)
         layoutTemperatureLabel(in: self.view)
@@ -210,7 +214,7 @@ extension DetailsViewController {
         layoutWeeklyDataTableView(in: self.view)
     }
 
-    private func layoutWeatherIconImageView(in container: UIView) {
+    func layoutWeatherIconImageView(in container: UIView) {
         let imageView = weatherIconImageView
         container.addSubview(imageView)
         NSLayoutConstraint.activate([
@@ -221,7 +225,7 @@ extension DetailsViewController {
         ])
     }
 
-    private func layoutCityNameLabel(in container: UIView) {
+    func layoutCityNameLabel(in container: UIView) {
         let label = cityNameLabel
         container.addSubview(label)
         NSLayoutConstraint.activate([
@@ -231,7 +235,7 @@ extension DetailsViewController {
         ])
     }
 
-    private func layoutTemperatureLabel(in container: UIView) {
+    func layoutTemperatureLabel(in container: UIView) {
         let label = temperatureLabel
         container.addSubview(label)
         NSLayoutConstraint.activate([
@@ -241,7 +245,7 @@ extension DetailsViewController {
         ])
     }
 
-    private func layoutConditionLabel(in container: UIView) {
+    func layoutConditionLabel(in container: UIView) {
         let label = conditionLabel
         container.addSubview(label)
         NSLayoutConstraint.activate([
@@ -250,7 +254,7 @@ extension DetailsViewController {
         ])
     }
 
-    private func layoutHumidityImageView(in container: UIView) {
+    func layoutHumidityImageView(in container: UIView) {
         let imageView = humidityImageView
         container.addSubview(imageView)
         NSLayoutConstraint.activate([
@@ -261,7 +265,7 @@ extension DetailsViewController {
         ])
     }
 
-    private func layoutHumidityTextLabel(in container: UIView) {
+    func layoutHumidityTextLabel(in container: UIView) {
         let label = humidityTextLabel
         container.addSubview(label)
         NSLayoutConstraint.activate([
@@ -270,7 +274,7 @@ extension DetailsViewController {
         ])
     }
 
-    private func layoutPressureImageView(in container: UIView) {
+    func layoutPressureImageView(in container: UIView) {
         let imageView = pressureImageView
         container.addSubview(imageView)
         NSLayoutConstraint.activate([
@@ -281,7 +285,7 @@ extension DetailsViewController {
         ])
     }
 
-    private func layoutPressureTextLabel(in container: UIView) {
+    func layoutPressureTextLabel(in container: UIView) {
         let label = pressureTextLabel
         container.addSubview(label)
         NSLayoutConstraint.activate([
@@ -290,7 +294,7 @@ extension DetailsViewController {
         ])
     }
 
-    private func layoutWindSpeedImageView(in container: UIView) {
+    func layoutWindSpeedImageView(in container: UIView) {
         let imageView = windSpeedImageView
         container.addSubview(imageView)
         NSLayoutConstraint.activate([
@@ -301,7 +305,7 @@ extension DetailsViewController {
         ])
     }
 
-    private func layoutWindSpeedTextLabel(in container: UIView) {
+    func layoutWindSpeedTextLabel(in container: UIView) {
         let label = windSpeedTextLabel
         container.addSubview(label)
         NSLayoutConstraint.activate([
@@ -310,7 +314,7 @@ extension DetailsViewController {
         ])
     }
 
-    private func layoutTodayTextLabel(in container: UIView) {
+    func layoutTodayTextLabel(in container: UIView) {
         let label = todayTextLabel
         container.addSubview(label)
         NSLayoutConstraint.activate([
@@ -319,7 +323,7 @@ extension DetailsViewController {
         ])
     }
 
-    private func layoutCollectionView(in container: UIView) {
+    func layoutCollectionView(in container: UIView) {
         let collectionView = hourlyDataCollectionView
         container.addSubview(collectionView)
         NSLayoutConstraint.activate([
@@ -330,7 +334,7 @@ extension DetailsViewController {
         ])
     }
 
-    private func layoutWeeklyDataTableView(in container: UIView) {
+    func layoutWeeklyDataTableView(in container: UIView) {
         let tableView = weeklyDataTableView
         container.addSubview(tableView)
         NSLayoutConstraint.activate([
